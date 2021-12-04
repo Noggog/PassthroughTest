@@ -20,10 +20,15 @@ namespace PassthroughTest
 
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
+            Console.WriteLine($"{state.LoadOrder.Count()} mods in the load order");
+            int count = 0;
             foreach (var npc in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
             {
+                Console.WriteLine($"Copying {npc}");
                 state.PatchMod.Npcs.GetOrAddAsOverride(npc);
+                count++;
             }
+            Console.WriteLine($"Passed through {count} npcs");
         }
     }
 }
