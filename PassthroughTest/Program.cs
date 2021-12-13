@@ -22,10 +22,10 @@ namespace PassthroughTest
         {
             Console.WriteLine($"{state.LoadOrder.Count()} mods in the load order");
             int count = 0;
-            foreach (var npc in state.LoadOrder.PriorityOrder.Npc().WinningOverrides())
+            foreach (var npcContext in state.LoadOrder.PriorityOrder.Npc().WinningContextOverrides())
             {
-                Console.WriteLine($"Copying {npc}");
-                state.PatchMod.Npcs.GetOrAddAsOverride(npc);
+                Console.WriteLine($"Copying {npcContext.Record} from {npcContext.ModKey}.  Had {npcContext.Record.HeadParts.Count} head parts.");
+                state.PatchMod.Npcs.GetOrAddAsOverride(npcContext.Record);
                 count++;
             }
             Console.WriteLine($"Passed through {count} npcs");
