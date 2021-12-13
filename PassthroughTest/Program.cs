@@ -20,7 +20,24 @@ namespace PassthroughTest
 
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
-            Console.WriteLine($"{state.LoadOrder.Count()} mods in the load order");
+            Console.WriteLine($"{state.LoadOrder.Count()} mods in the load order:");
+            foreach (var listing in state.LoadOrder)
+            {
+                Console.WriteLine($"   {listing.Value}");
+            }
+            Console.WriteLine();
+
+            foreach (var listing in state.LoadOrder)
+            {
+                if (!listing.Key.Name.Contains("Bashed") || listing.Value.Mod == null) continue;
+                Console.WriteLine($"Printing NPCs for {listing.Key}");
+                foreach (var npc in listing.Value.Mod.Npcs)
+                {
+                    Console.WriteLine($"{listing.Key} {npc} had {npc.HeadParts.Count} head parts.");
+                }
+            }
+            Console.WriteLine();
+
             int count = 0;
             foreach (var npcContext in state.LoadOrder.PriorityOrder.Npc().WinningContextOverrides())
             {
