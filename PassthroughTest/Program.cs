@@ -24,11 +24,20 @@ namespace PassthroughTest
             int count = 0;
             foreach (var npcContext in state.LoadOrder.PriorityOrder.Npc().WinningContextOverrides())
             {
-                Console.WriteLine($"Copying {npcContext.Record} from {npcContext.ModKey}.  Had {npcContext.Record.HeadParts.Count} head parts.");
+                Console.WriteLine($"Copying {npcContext.Record} from {npcContext.ModKey}.");
                 state.PatchMod.Npcs.GetOrAddAsOverride(npcContext.Record);
                 count++;
             }
             Console.WriteLine($"Passed through {count} npcs");
+            
+            count = 0;
+            foreach (var bookContext in state.LoadOrder.PriorityOrder.Book().WinningContextOverrides())
+            {
+                Console.WriteLine($"Copying {bookContext.Record} from {bookContext.ModKey}.");
+                state.PatchMod.Books.GetOrAddAsOverride(bookContext.Record);
+                count++;
+            }
+            Console.WriteLine($"Passed through {count} books");
         }
     }
 }
